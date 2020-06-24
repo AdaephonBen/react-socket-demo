@@ -1,8 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import logo from "./logo.svg";
+import socketIOClient from "socket.io-client";
+import "./App.css";
 
 function App() {
+  useEffect(() => {
+    const socket = socketIOClient("http://13.127.14.125:4000/ml");
+    socket.emit("get-cam", 1);
+
+    socket.on("results-cam", (x) => console.log(JSON.stringify(x, null, 2)));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
